@@ -1,5 +1,7 @@
 use strict;
-use Getopt::Long;
+use warnings;
+use Getopt::Long qw(GetOptions);
+
 
 
 #WARNINGS :
@@ -13,15 +15,11 @@ use Getopt::Long;
 
 my $bamfile;
 my $genome;
+GetOptions ("bam=s" => \$bamfile,    # numeric
+              "genome=s"   => \$genome) or die "USAGE : perl $0 --bam bamfile -genome genome.fai\n";
 
-GetOptions ("bam=b" => \$bamfile,   
-	    "genome=g"   => \$genome) 
-or die("Error in command line arguments please do :\nperl bam2firstbasebam.pl --bam bamfile --genome human.fai");
+if (!$bamfile || !$genome) {die "USAGE : perl $0 --bam bamfile -genome genome.fai\n";}
 
-
-
-my $bamfile = $ARGV[0];
-my $genome = $ARGV[1]; #.fai genomes
 
 
 
