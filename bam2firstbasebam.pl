@@ -1,4 +1,6 @@
 use strict;
+use Getopt::Long;
+
 
 #WARNINGS :
 #paired end mapping : you will get both end of the fragment ! for the TSS, get the R1 (small RNA) or R2 (RNA seq) only.
@@ -9,11 +11,22 @@ use strict;
 #OUTPUT :
 # X_start.bam and X_start.bam.bai
 
+my $bamfile;
+my $genome;
+
+GetOptions ("bam=b" => \$bamfile,   
+	    "genome=g"   => \$genome) 
+or die("Error in command line arguments please do :\nperl bam2firstbasebam.pl --bam bamfile --genome human.fai");
+
+
+
 my $bamfile = $ARGV[0];
+my $genome = $ARGV[1]; #.fai genomes
+
+
 
 my $generic = $bamfile;
 $generic =~ s/\.bam//;
-my $genome = "/mnt/home/laurence/projects/ira_cap/genome/ecoli_genome_and_controls_new.fasta.fai";
 
 print STDERR "Generating the bam files - be patient it may take a while - \n";
 
@@ -21,6 +34,7 @@ print STDERR "Generating the bam files - be patient it may take a while - \n";
 my $file_tmp = "bamtmp";my $bed = "bedtmp";my $newbam = $generic."_start";
 
 my $command = "bedtools bamtobed -cigar  -i $bamfile > $file_tmp"; 
+
 print STDERR "$command\n";
 system($command);
 parse_bed($file_tmp, $bed);
@@ -30,6 +44,9 @@ my $newbam_withbam = $newbam.".bam";
 my $command3 = "samtools index $newbam_withbam";
 system($command2);
 system($command3);
+
+
+
  
 sub parse_bed {
     my ($file, $bed)=@_;
