@@ -1,12 +1,10 @@
+#!/usr/bin/perl
+
 use strict;
 use warnings;
 use Getopt::Long qw(GetOptions);
 
 
-
-#WARNINGS :
-#paired end mapping : you will get both end of the fragment ! for the TSS, get the R1 (small RNA) or R2 (RNA seq) only.
-#
 
 # INPUT :
 #bam file X.bam (preferably generated through local alignment such as Bowtie --local)
@@ -15,10 +13,41 @@ use Getopt::Long qw(GetOptions);
 
 my $bamfile;
 my $genome;
-GetOptions ("bam=s" => \$bamfile,    # numeric
-              "genome=s"   => \$genome) or die "USAGE : perl $0 --bam bamfile -genome genome.fai\n";
+my $lib_type = "F";
 
-if (!$bamfile || !$genome) {die "USAGE : perl $0 --bam bamfile -genome genome.fai\n";}
+GetOptions ("bam=s" => \$bamfile,    # numeric
+              "genome=s"   => \$genome,
+	    "lib_type=s" => \$lib_type
+    ) or die "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
+
+if (!$bamfile || !$genome) {die "USAGE : perl $0 --bam bamfile --genome genome.fai\n";}
+if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
+--lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
+}
+
+my $resulting_bam;
+if ($lib_type eq "F") #single read library with R1 being the most 5' end of the transcripts. 
+{
+    $resulting_bam = $bamfile;
+}
+elsif ($lib_type eq "FR")
+{
+    my $tmp = "R1";
+    #extract R1 from bam
+    my $library_command = "samtools view -f64 -b $bamfile | samtools sort - $tmp";
+    $resulting_bam = $tmp.".bam";
+    system($library_command);
+}
+elsif ($lib_type eq "RF")
+{
+    my $tmp = "R2";
+    #extract R1 from bam                                                                                                                                                      
+    my $library_command = "samtools view -f128 -b $bamfile | samtools sort - $tmp";
+    $resulting_bam = $tmp.".bam";
+    system($library_command);
+}
+
+
 
 
 
@@ -31,7 +60,7 @@ print STDERR "Generating the bam files - be patient it may take a while - \n";
 
 my $file_tmp = "bamtmp";my $bed = "bedtmp";my $newbam = $generic."_start";
 
-my $command = "bedtools bamtobed -cigar  -i $bamfile > $file_tmp"; 
+my $command = "bedtools bamtobed -cigar  -i $resulting_bam > $file_tmp"; 
 
 print STDERR "$command\n";
 system($command);
@@ -40,10 +69,15 @@ parse_bed($file_tmp, $bed);
 my $command2 = "bedtools bedtobam -i $bed -g $genome | samtools sort - $newbam";
 my $newbam_withbam = $newbam.".bam";
 my $command3 = "samtools index $newbam_withbam";
+
+#excecute the commands
+
 system($command2);
 system($command3);
 
-
+#removing tmp files that are not necessary anymore. 
+unlink($file_tmp);
+unlink($bed);
 
  
 sub parse_bed {
