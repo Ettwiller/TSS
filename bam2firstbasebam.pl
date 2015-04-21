@@ -54,6 +54,7 @@ elsif ($lib_type eq "RF")
 
 my $generic = $bamfile;
 $generic =~ s/\.bam//;
+$generic =~ s/.*\///g;
 
 print STDERR "Generating the bam files - be patient it may take a while - \n";
 
