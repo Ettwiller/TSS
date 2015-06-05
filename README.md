@@ -1,4 +1,12 @@
-# TSS
+# TSS workflow for Cappable-seq
+
+
+REQUIREMENT : Prior to running the TSS workflow for cappable-seq please download and install the following programs :
+
+BEDTOOLS (http://bedtools.readthedocs.org/en/latest/content/installation.html)
+SAMTOOLS (http://samtools.sourceforge.net/)
+
+
 
 This sets of programs were developped in conjuction with Cappable-seq (Manuscript :
  A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 programs :
@@ -14,7 +22,7 @@ This sets of programs were developped in conjuction with Cappable-seq (Manuscrip
  
  [3] filter_tss.pl : The program takes 2 arguments (minimum),--control  the control gtf file (output from bam2firstbasegtf.pl using the control library) and --tss, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are --cutoff (default 0) and --Rformat output format (default 0). The cutoff filters out positions which enrichment score are below the defined cutoff (default 0). 
 
- [4] cluster_tss.pl : The program takes 1 argument (minimum) --tss the gtf file (output of filter_tss.pl with Rformat 0). Optinal argument is --cutoff (default 5) that defines the size of the upstream and downstream region to considered for clustering. 
+ [4] cluster_tss.pl : The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optinal argument is --cutoff (default 5) that defines the size of the upstream and downstream region to considered for clustering. 
 
 
 The command used for the Cappable-seq analysis were the following :
