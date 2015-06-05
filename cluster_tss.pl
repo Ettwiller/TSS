@@ -6,7 +6,7 @@ use Getopt::Long qw(GetOptions);
 
 my $error_sentence = "USAGE : perl $0 --tss tss_file --cutoff 3 (DEFAULT 0 bp merging)";
 my $tssfile;
-my $CUTOFF = 0;
+my $CUTOFF = 5;
 
 
 GetOptions ("tss=s" => \$tssfile,    # numeric
