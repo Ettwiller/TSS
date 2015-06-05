@@ -1,14 +1,15 @@
 #!/usr/bin/perl
 
 use strict;
-
 use Getopt::Long qw(GetOptions);
 
 
+#this program takes two gtf files (output of bam2firstbasegtf.pl) corresponding to the control library (--control) and the cappable-seq library (--tss). 
+
+
+
+
 my $error_sentence = "USAGE : perl $0 --tss tss_file --control control_file\n OPTIONAL : --cutoff log2(ratio) --Rformat 1";
-
-
-
 my $tssfile;
 my $controlfile;
 my $CUTOFF = 0;
