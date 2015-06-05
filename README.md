@@ -13,3 +13,8 @@ This sets of programs were developped in conjuction with Cappable-seq (Manuscrip
  [2] bam2firstbasegtf.pl : the program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type library type (default F) see description above. This program identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome and orientation and normalized the number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. Cutoff 
  
  [3] filter_tss.pl : 
+<<<<<<< HEAD
+=======
+ 
+ 
+>>>>>>> a9cdb8d722002fdbb4006d1e2a9809b9cbd43490
