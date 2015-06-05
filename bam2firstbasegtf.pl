@@ -96,7 +96,9 @@ foreach my $chr (sort keys %$result)
 		my $start = $keys +1;
 		$total_count ++;
 		my @tmp = @{$$result{$chr}{$keys}{"+"}{"read"}};
-		my $id = "TSS_".$start;
+		my $id = $chr."_".$start."_".$pos."_+_";
+		
+
 		print "$chr\t$generic\t$id\t$start\t$start\t$pos\t+\t.\tnumber_of_read=$abs_pos;total_number_of_read=$count_mapped_read\n";
 	    }
 	}
@@ -108,7 +110,7 @@ foreach my $chr (sort keys %$result)
 	    {
 		my $start = $keys;
 		$total_count ++;
-		my $id = "TSS_".$start;
+		my $id = $chr."_".$start."_".$neg."_-_";
 		my @tmp = @{$$result{$chr}{$keys}{"-"}{"read"}};
 		print "$chr\t$generic\t$id\t$start\t$start\t$neg\t-\t.\tnumber_of_read=$abs_neg;total_number_of_read=$count_mapped_read\n";
 	    }

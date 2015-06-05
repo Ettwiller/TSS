@@ -55,8 +55,13 @@ foreach my $chr(keys %$tss)
 		my $line = $$tss{$chr}{$position}{$direction}{"line"};
 		if ($Rformat ==0)
 		{
-		    $line = $line.";enrichment_score=$enrichement_score;score_control=$score_control";
-		    print "$line\n";
+		    my @tmp = split /\t/, $line;
+		    my $id= $tmp[2];
+		    $id = $id.$enrichement_score;
+		    $tmp[2]= $id;
+		    my $new_line = join("\t", @tmp);
+		    $new_line = $new_line.";enrichment_score=$enrichement_score;score_control=$score_control";
+		    print "$new_line\n";
 		}
 		if ($Rformat ==1)
 		{

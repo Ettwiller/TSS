@@ -47,8 +47,11 @@ sub parse_merged{
         my @sorted = sort { $b->[0] <=> $a->[0] } @result;
         my $highest_pos = $sorted[0][1];
         my @col = split /\_/, $highest_pos;
-        print "$col[0]\t$col[1]\t$col[1]\t$highest_pos\t$col[2]\t$col[3]\n";
-        
+# bed format
+	#print "$col[0]\t$col[1]\t$col[1]\t$highest_pos\t$col[2]\t$col[3]\n";
+        #gtf format :
+	print "$col[0]\tCAPPABLE_SEQ\tTSS\t$col[1]\t$col[1]\t$col[2]\t$col[3]\t.\t$highest_pos\n";
+
 
 
     }
