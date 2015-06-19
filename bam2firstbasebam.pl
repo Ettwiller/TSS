@@ -5,7 +5,7 @@ use warnings;
 use Getopt::Long qw(GetOptions);
 
 
-
+#this program is primary used for visualizing the TSS on IGV or other genome browser with the read being narrow down to 1 bp resolution. 
 # INPUT :
 #bam file X.bam (preferably generated through local alignment such as Bowtie --local)
 #OUTPUT :
@@ -61,12 +61,14 @@ print STDERR "Generating the bam files - be patient it may take a while - \n";
 
 my $file_tmp = "bamtmp";my $bed = "bedtmp";my $newbam = $generic."_start";
 
+#first convert your bam to bed. 
 my $command = "bedtools bamtobed -cigar  -i $resulting_bam > $file_tmp"; 
 
 print STDERR "$command\n";
 system($command);
 parse_bed($file_tmp, $bed);
 
+#then go back to bam again - sort it at the same time. 
 my $command2 = "bedtools bedtobam -i $bed -g $genome | samtools sort - $newbam";
 my $newbam_withbam = $newbam.".bam";
 my $command3 = "samtools index $newbam_withbam";
