@@ -57,10 +57,10 @@ This sets of programs were developed in conjuction with Cappable-seq (Manuscript
  A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 programs :
  </p>
 <p>
- [1] bam2firstbasebam.pl
- [2] bam2firstbasegtf.pl
- [3] filter_tss.pl
- [4] cluster_tss.pl
+ [1] bam2firstbasebam.pl<p>
+ [2] bam2firstbasegtf.pl<p>
+ [3] filter_tss.pl<p>
+ [4] cluster_tss.pl<p>
 </p>
 <p> 
  [1] bam2firstbasebam.pl : the program takes 2 arguments (minimum), --bam the mapped bam file and --genome the genome file (fasta format) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse will not provide TSS information. The program output a bam and bai file containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV. 
