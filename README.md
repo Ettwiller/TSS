@@ -9,12 +9,16 @@ SAMTOOLS (http://samtools.sourceforge.net/)
 
 
 This sets of programs were developed in conjuction with Cappable-seq (Manuscript :
- A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 programs :
+ A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 basic programs :
  
  [1] bam2firstbasebam.pl
  [2] bam2firstbasegtf.pl
  [3] filter_tss.pl
  [4] cluster_tss.pl
+
+It contains also analysis program for a specific task such as :
+  [5] organized_by_TSS_type.pl
+
  
  [1] bam2firstbasebam.pl : the program takes 2 arguments (minimum), --bam the mapped bam file and --genome the genome file (fasta format) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse will not provide TSS information. The program output a bam and bai file containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV. 
  
@@ -25,9 +29,15 @@ This sets of programs were developed in conjuction with Cappable-seq (Manuscript
  [4] cluster_tss.pl : The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
 
 
+ [5] organized_by_TSS_type.pl  --tss ../../TSS/TSS_enriched_cluster_5.gtf --genome /mnt/home/ettwiller/laurence/projects/ira_cap/3_ecoli_RNase_inhibitors/genome/ecoli_genome_and_controls_new.fasta --detail : 0 or 1 : 0 gives an overview of the percentage of TSS have a defined -1+1 combinations while 1 gives you for each TSS, the -1+1 combination, its strength (RSS) and enrichement (in cappable-seq) 
+
+
 The commands used for the Cappable-seq analysis are the following :
 bam2firstbasegtf.pl  --bam Replicate1_control_R1_001.bam --cutoff 0 > control.gtf
 bam2firstbasegtf.pl  --bam Replicate1_enriched_R1_001.bam --cutoff 1.5 > enriched.gtf
 filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
 cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 >  TSS_enriched_cluster_5.gtf
+
+Figure3 :
+organized_by_TSS_type.pl  --tss TSS_enriched_cluster_5.gtf --genome reference_genome.fasta --detail 1 or 0
 
