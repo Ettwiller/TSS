@@ -1,5 +1,5 @@
 # TSS workflow for Cappable-seq
-
+# Laurence Ettwiller
 
 REQUIREMENT : Prior to running the TSS workflow for cappable-seq please download and install the following programs :
 
