@@ -5,11 +5,13 @@
 ##REQUIREMENT : 
 Prior to running the TSS workflow for cappable-seq please download and install the following programs :
 
-BEDTOOLS (http://bedtools.readthedocs.org/en/latest/content/installation.html)
-SAMTOOLS (http://samtools.sourceforge.net/)
+**BEDTOOLS** (http://bedtools.readthedocs.org/en/latest/content/installation.html)
+
+**SAMTOOLS** (http://samtools.sourceforge.net/)
 
 Optional : 
-IGV (http://www.broadinstitute.org/igv/)
+
+**IGV** (http://www.broadinstitute.org/igv/)
 
 
 ##OVERVIEW
@@ -22,18 +24,18 @@ A novel strategy for investigating transcriptomes by capturing primary RNA trans
 
 It contains also related programs for a specific task such as :
    
-   [4] bam2firstbasebam.pl (to visualized mapped reads at one base resolution using IGV).	
-   [5] organized_by_TSS_type.pl 
+  [4] bam2firstbasebam.pl (to visualized mapped reads at one base resolution using IGV).	
+  [5] organized_by_TSS_type.pl 
 
 
-##DETAILS MAIN PROGRAM :
+##DETAILS OF THE MAIN PROGRAMS :
 
 ###[1] bam2firstbasegtf.pl :
 
 DESCRIPTION :
 
 OPTIONS :
-the program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type 
+The program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type 
 library type (default F, see description above). This program identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The cutoff filter out positions which RRS are below the defined cutoff (default 0).
 
 OUTPUT :
@@ -47,7 +49,11 @@ OPTIONS :
 The program takes 2 arguments (minimum),--control  the control gtf file (output from bam2firstbasegtf.pl using the control library) and --tss, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are --cutoff (default 0) and --Rformat output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
 
  
-###[3] cluster_tss.pl : The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
+###[3] cluster_tss.pl : 
+DESCRIPTION :
+
+OPTIONS : 
+The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
 
 
 ##DETAILS RELATED PROGRAMS :
