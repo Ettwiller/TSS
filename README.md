@@ -1,8 +1,9 @@
 # TSS workflow for Cappable-seq
-# Laurence Ettwiller (New England Biolabs)
+ Laurence Ettwiller (New England Biolabs)
 
 
-##REQUIREMENT : Prior to running the TSS workflow for cappable-seq please download and install the following programs :
+##REQUIREMENT : 
+Prior to running the TSS workflow for cappable-seq please download and install the following programs :
 
 BEDTOOLS (http://bedtools.readthedocs.org/en/latest/content/installation.html)
 SAMTOOLS (http://samtools.sourceforge.net/)
@@ -29,20 +30,20 @@ It contains also related programs for a specific task such as :
 
 ###[1] bam2firstbasegtf.pl :
 
-####DESCRIPTION :
+DESCRIPTION :
 
-####OPTIONS :
+OPTIONS :
 the program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type 
 library type (default F, see description above). This program identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The cutoff filter out positions which RRS are below the defined cutoff (default 0).
 
-####OUTPUT :
+OUTPUT :
 
 
 ###[2] filter_tss.pl : 
 
-####DESRCIPTION :
+DESRCIPTION :
     
-####OPTIONS :
+OPTIONS :
 The program takes 2 arguments (minimum),--control  the control gtf file (output from bam2firstbasegtf.pl using the control library) and --tss, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are --cutoff (default 0) and --Rformat output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
 
  
@@ -54,12 +55,12 @@ The program takes 2 arguments (minimum),--control  the control gtf file (output 
 
 ###[4] bam2firstbasebam.pl :
 
-####DESCRIPTION :
+DESCRIPTION :
 
-####OPTIONS :
+OPTIONS :
 The program takes 2 arguments (minimum), --bam the mapped bam file (REQUIRED) and --genome the genome file (fasta format, REQUIRED) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse will not provide TSS information.
 
-####OUTPUT :
+OUTPUT :
 The program output a .bam and .bai files containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV.
 
 
