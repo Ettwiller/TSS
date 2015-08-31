@@ -56,30 +56,35 @@ OPTIONS :
 The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
 
 
-##DETAILS RELATED PROGRAMS :
+##DETAILS OF THE RELATED PROGRAMS :
 
 
 ###[4] bam2firstbasebam.pl :
 
-DESCRIPTION :
+DESCRIPTION : This program is intended for visualization purpose only (using IGV). The read will only be 1 bp long (the most 5' mapped position) and for paired-end read, only the relevant read (the transcript most 5' end) will be shown. 
 
 OPTIONS :
-The program takes 2 arguments (minimum), --bam the mapped bam file (REQUIRED) and --genome the genome file (fasta format, REQUIRED) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse will not provide TSS information.
+The program takes 2 arguments (minimum), --bam the mapped bam file (REQUIRED) and --genome the index of the genome file (fai format, REQUIRED) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported. the .fai file correspond to the index of the genome file (can be obtained using samtools faidx command such as ```samtools faidx genome.fasta``` to obtain a genome.fasta.fai file). 
 
 OUTPUT :
 The program output a .bam and .bai files containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV.
 
 
 
-###[5] organized_by_TSS_type.pl  --tss ../../TSS/TSS_enriched_cluster_5.gtf --genome /mnt/home/ettwiller/laurence/projects/ira_cap/3_ecoli_RNase_inhibitors/genome/ecoli_genome_and_controls_new.fasta --detail : 0 or 1 : 0 gives an overview of the percentage of TSS have a defined -1+1 combinations while 1 gives you for each TSS, the -1+1 combination, its strength (RSS) and enrichement (in cappable-seq) 
+###[5] organized_by_TSS_type.pl :
+DESCRIPTION :
+
+OPTION : --tss ../../TSS/TSS_enriched_cluster_5.gtf --genome /mnt/home/ettwiller/laurence/projects/ira_cap/3_ecoli_RNase_inhibitors/genome/ecoli_genome_and_controls_new.fasta --detail : 0 or 1 : 0 gives an overview of the percentage of TSS have a defined -1+1 combinations while 1 gives you for each TSS, the -1+1 combination, its strength (RSS) and enrichement (in cappable-seq) 
 
 
 ##The commands used for the Cappable-seq analysis are the following :
+```
 bam2firstbasegtf.pl  --bam Replicate1_control_R1_001.bam --cutoff 0 > control.gtf
 bam2firstbasegtf.pl  --bam Replicate1_enriched_R1_001.bam --cutoff 1.5 > enriched.gtf
 filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
 cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 >  TSS_enriched_cluster_5.gtf
-
+```
 Figure3 :
+```
 organized_by_TSS_type.pl  --tss TSS_enriched_cluster_5.gtf --genome reference_genome.fasta --detail 1 or 0
-
+```
