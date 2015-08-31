@@ -32,13 +32,24 @@ It contains also related programs for a specific task such as :
 
 ###[1] bam2firstbasegtf.pl :
 
+EXAMPLE :
+```
+bam2firstbasegtf.pl  --bam Cappable-seq_example.bam --cutoff 1.5 --lib_type F > cappable-seq_TSS.gtf
+```
+
 DESCRIPTION :
 
-OPTIONS :
-The program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type 
-library type (default F, see description above). This program identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The cutoff filter out positions which RRS are below the defined cutoff (default 0).
+```bam2firstbasegtf.pl``` identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The cutoff filter out positions which RRSio are below the defined cutoff (default 0, no filtering).
 
-OUTPUT :
+OPTIONS :
+The program takes 1 argument (minimum), ```--bam```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
+
+```--bam``` : bam file of aligned reads
+```--cutoff``` : positive number corresponding to the RRSio (filtering TSS according to the relative read score).
+```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
+
+OUTPUT : gtf file correponding to TSS genomic position. 
+ 
 
 
 ###[2] filter_tss.pl : 
@@ -46,14 +57,20 @@ OUTPUT :
 DESRCIPTION :
     
 OPTIONS :
-The program takes 2 arguments (minimum),--control  the control gtf file (output from bam2firstbasegtf.pl using the control library) and --tss, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are --cutoff (default 0) and --Rformat output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
+```filter_tss.pl``` takes 2 arguments (minimum),```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library) and ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
 
  
 ###[3] cluster_tss.pl : 
+
+EXAMPLE : 
+```
+filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
+```
+
 DESCRIPTION :
 
 OPTIONS : 
-The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
+The program takes 1 argument ```--tss``` the .gtf file (output of ```filter_tss.pl``` with Rformat 0, REQUIRED). Optional argument is ```--cutoff``` (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
 
 
 ##DETAILS OF THE RELATED PROGRAMS :
@@ -64,7 +81,7 @@ The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss
 DESCRIPTION : This program is intended for visualization purpose only (using IGV). The read will only be 1 bp long (the most 5' mapped position) and for paired-end read, only the relevant read (the transcript most 5' end) will be shown. 
 
 OPTIONS :
-The program takes 2 arguments (minimum), --bam the mapped bam file (REQUIRED) and --genome the index of the genome file (fai format, REQUIRED) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported. the .fai file correspond to the index of the genome file (can be obtained using samtools faidx command such as ```samtools faidx genome.fasta``` to obtain a genome.fasta.fai file). 
+```bam2firstbasebam.pl``` takes 2 arguments (minimum), ```--bam``` the mapped bam file (REQUIRED) and ```--genome``` the index of the genome file (fai format, REQUIRED) used to map the reads. The optional argument is the library type (```--lib_type``` default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported. the .fai file correspond to the index of the genome file (can be obtained using samtools faidx command such as ```samtools faidx genome.fasta``` to obtain a genome.fasta.fai file). 
 
 OUTPUT :
 The program output a .bam and .bai files containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV.
