@@ -15,8 +15,10 @@ my $bamfile;
 my $genome;
 my $lib_type = "F";
 
+my $error_message = "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
+
 GetOptions ("bam=s" => \$bamfile,    # numeric
-              "genome=s"   => \$genome,
+	    "genome=s"   => \$genome,
 	    "lib_type=s" => \$lib_type
     ) or die "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
 
