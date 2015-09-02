@@ -25,27 +25,25 @@ R: will not work!
 # INPUT :
 #bam file X.bam (preferably generated through local alignment such as Bowtie --local)
 #OUTPUT :
-#
 
-
-
-
+#OPTIONS :
 my $bamfile;
 my $lib_type = "F";
 my $CUTOFF = 0;
 
-GetOptions ("bam=s" => \$bamfile,    # numeric
-	    "lib_type=s" => \$lib_type,
-	    "cutoff=s" => \$CUTOFF
+GetOptions ("bam=s" => \$bamfile,    # the bam file containing the mapped reads
+	    "lib_type=s" => \$lib_type, #the type of RNA library used during the experiment
+	    "cutoff=s" => \$CUTOFF #read number cutoff (see paper)
     ) or die "USAGE : perl $0 $error_sentence";
 
+#if something went wrong, notify :
 if (!$bamfile) {die "$error_sentence"};
 if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
 --lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
 }
 
-my $generic =  clean_name($bamfile);
 
+my $generic =  clean_name($bamfile);
 my $resulting_bam;
 if ($lib_type eq "F") #single read library with R1 being the most 5' end of the transcripts. 
 {
@@ -69,13 +67,12 @@ elsif ($lib_type eq "RF")
 }
 
 #get the total number of reads that map to the genome.
-my $count_mapped_read = `samtools view -F4 $resulting_bam -c`;
-print STDERR "number of reads mapping to e.coli = $count_mapped_read\n";
+my $count_mapped_read = `samtools view -c -F4 $resulting_bam`;
 chomp $count_mapped_read;
+print STDERR "number of reads mapping to genome = $count_mapped_read\n";
+
 my $file_tmp = $generic."_tmp.bed";
 my $command = "bedtools bamtobed -cigar  -i $resulting_bam > $file_tmp"; 
-print STDERR "$command\n";
-
 system($command);
 my $result = parse_bed($file_tmp);
 unlink($file_tmp);

@@ -1,4 +1,4 @@
-# TSS workflow for Cappable-seq
+ # TSS workflow for Cappable-seq
  Laurence Ettwiller (New England Biolabs)
 
 
@@ -18,13 +18,13 @@ Optional :
 This sets of programs were developed in conjuction with Cappable-seq (Manuscript :
 A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 basic programs :
  
- 1. ```bam2firstbasegtf.pl``` (to identify TSS positions at 1 base pair resolution).
- 2. ```filter_tss.pl``` (if a control experiment has been done (no enrichment) this program filtered out false positive positions (depleted positions)
- 3. ```cluster_tss.pl``` (to cluster close-by TSS)
+ 1. ```bam2firstbasegtf.pl``` 
+ 2. ```filter_tss.pl``` 
+ 3. ```cluster_tss.pl```
 
 It contains also related programs for a specific task such as :
    
-  4. ```bam2firstbasebam.pl``` (to visualized mapped reads at one base resolution using IGV).	
+  4. ```bam2firstbasebam.pl```
   5. ```organized_by_TSS_type.pl``` 
 
 
@@ -39,7 +39,9 @@ bam2firstbasegtf.pl  --bam Cappable-seq_example.bam --cutoff 1.5 --lib_type F > 
 
 DESCRIPTION :
 
-```bam2firstbasegtf.pl``` identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering).
+```bam2firstbasegtf.pl``` identifies TSS at one base resolution. 
+
+the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering).
 
 OPTIONS :
 The program takes 1 argument (minimum), ```--bam```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
@@ -86,6 +88,11 @@ The program takes a minimum of 1 argument ```--tss``` the .gtf file (output of `
 
 
 ###[4] bam2firstbasebam.pl :
+
+EXAMPLE
+```
+bam2firstbasebam.pl  --bam cappable-seq.bam --genome ecoli_genome.fai
+```
 
 DESCRIPTION : This program is intended for visualization purpose only (using IGV). The read will only be 1 bp long (the most 5' mapped position) and for paired-end read, only the relevant read (the transcript most 5' end) will be shown. 
 
