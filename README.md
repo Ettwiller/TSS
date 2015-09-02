@@ -34,7 +34,7 @@ It contains also related programs for a specific task such as :
 
 EXAMPLE :
 ```
-bam2firstbasegtf.pl  --bam Cappable-seq_example.bam --cutoff 1.5 --lib_type F > cappable-seq_TSS.gtf
+bam2firstbasegtf.pl  --bam Cappable-seq_example.bam --cutoff 1.5 --lib_type F --out cappable-seq_TSS.gtf
 ```
 
 DESCRIPTION :
@@ -46,9 +46,9 @@ the reads to the position of the most 5'end position of the mapped read (R1 for 
 OPTIONS :
 The program takes 1 argument (minimum), ```--bam```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
 
-```--bam``` : bam file of aligned reads.
+```--bam``` : path to the bam file of aligned reads.
 
-```--cutoff``` : positive number corresponding to the RRSio (filtering TSS according to the relative read score).
+```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
 
 ```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
 
@@ -60,28 +60,28 @@ OUTPUT : gtf file correponding to TSS genomic position.
 
 EXAMPLE : 
 ```
-filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
+filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 --out TSS_enriched.gtf
 ```
 
 DESRCIPTION :
-
+This program require that a control library has been performed together with Cappable-seq. The programs takes two files : [1] a control gtf file (from the control library) and  [2] a cappable-seq gtf file (from the cappable-seq library). Both gtf are the result of the bam2firstbasegtf.pl. 
 
     
 OPTIONS :
-```filter_tss.pl``` takes a minimum of 2 arguments,```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library) and ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
+```filter_tss.pl``` takes 3 REQUIRED arguments,```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library) and ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library) and ```--out``` thename  output file (gtf format). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
 
  
 ###[3] cluster_tss.pl : 
 
 EXAMPLE : 
 ```
-cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 >  TSS_enriched_cluster_5.gtf
+cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.gtf
 ```
 
 DESCRIPTION : Number of	TSS have an imprecise start. This program clusters the nearby TSSs into	one single position per	cluster corresponding to the position with the highest RRSio. Only TSS on the same orientation are clustered together. Nearby is defined by the	```-cutoff``` parameter.
 
 OPTIONS : 
-The program takes a minimum of 1 argument ```--tss``` the .gtf file (output of ```filter_tss.pl``` with Rformat 0, REQUIRED). Optional argument is ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
+The program takes 2 REQUIRED arguments ```--tss``` the .gtf file (output of ```filter_tss.pl``` with Rformat 0 OR output of ```bam2firstbasegtf.pl``` directly if no control library has been made) and ```--out``` the name of the output file (in gtf format). Optional argument is ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
 
 
 ##DETAILS OF THE RELATED PROGRAMS :
@@ -112,10 +112,10 @@ OPTION : --tss ../../TSS/TSS_enriched_cluster_5.gtf --genome /mnt/home/ettwiller
 
 ##The commands used for the Cappable-seq analysis are the following :
 ```
-bam2firstbasegtf.pl  --bam Replicate1_control_R1_001.bam --cutoff 0 > control.gtf
-bam2firstbasegtf.pl  --bam Replicate1_enriched_R1_001.bam --cutoff 1.5 > enriched.gtf
-filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
-cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 >  TSS_enriched_cluster_5.gtf
+bam2firstbasegtf.pl  --bam Replicate1_control_R1_001.bam --cutoff 0 --out control.gtf
+bam2firstbasegtf.pl  --bam Replicate1_enriched_R1_001.bam --cutoff 1.5 --out enriched.gtf
+filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 --out TSS_enriched.gtf
+cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.gtf
 ```
 Figure3 :
 ```
