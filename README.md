@@ -44,13 +44,15 @@ DESCRIPTION :
 the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering).
 
 OPTIONS :
-The program takes 1 argument (minimum), ```--bam```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
+The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
 
-*```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
+* ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
+
+* ```-out``` : name of the  gtf file correponding to TSS genomic position.
 
 * ```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
 
-*```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
+* ```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
 
 OUTPUT : gtf file correponding to TSS genomic position. 
  
@@ -71,7 +73,10 @@ OPTIONS :
 ```filter_tss.pl``` takes 3 REQUIRED arguments :
 * ```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library without enrichment)
 * ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library)
-* ```--out``` the name of the output file (gtf format). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
+* ```--out``` the name of the output file (gtf format). 
+Optional aguments are 
+* ```--cutoff``` (default 0) :  The cutoff filters out positions for which enrichment score are below the defined cutoff. It only keeps positions for which log2 (RRStss / RRScontrol) > cutoff.
+* ```--Rformat``` output format (default 0).
 
  
 ###[3] cluster_tss.pl : 
@@ -84,7 +89,12 @@ cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.
 DESCRIPTION : Number of	TSS have an imprecise start. This program clusters the nearby TSSs into	one single position per	cluster corresponding to the position with the highest RRSio. Only TSS on the same orientation are clustered together. Nearby is defined by the	```-cutoff``` parameter.
 
 OPTIONS : 
-The program takes 2 REQUIRED arguments ```--tss``` the .gtf file (output of ```filter_tss.pl``` with Rformat 0 OR output of ```bam2firstbasegtf.pl``` directly if no control library has been made) and ```--out``` the name of the output file (in gtf format). Optional argument is ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
+The program takes 2 REQUIRED arguments 
+* ```--tss``` the .gtf file (output of ```filter_tss.pl``` with Rformat 0 OR output of ```bam2firstbasegtf.pl``` directly if no control library has been made) and 
+* ```--out``` the name of the output file (in gtf format). 
+
+Optional argument is 
+* ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
 
 
 ##DETAILS OF THE RELATED PROGRAMS :
