@@ -16,10 +16,10 @@ Optional :
 
 ##OVERVIEW
 This sets of programs were developed in conjuction with Cappable-seq (Manuscript :
-A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 basic programs :
+A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 3 basic programs :
  
  1. ```bam2firstbasegtf.pl``` 
- 2. ```filter_tss.pl``` 
+ 2. ```filter_tss.pl``` OPTIONAL if a control library has been added.  
  3. ```cluster_tss.pl```
 
 It contains also related programs for a specific task such as :
@@ -46,11 +46,11 @@ the reads to the position of the most 5'end position of the mapped read (R1 for 
 OPTIONS :
 The program takes 1 argument (minimum), ```--bam```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
 
-```--bam``` : path to the bam file of aligned reads.
+*```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
 
-```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
+* ```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
 
-```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
+*```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
 
 OUTPUT : gtf file correponding to TSS genomic position. 
  
@@ -68,7 +68,10 @@ This program require that a control library has been performed together with Cap
 
     
 OPTIONS :
-```filter_tss.pl``` takes 3 REQUIRED arguments,```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library) and ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library) and ```--out``` thename  output file (gtf format). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
+```filter_tss.pl``` takes 3 REQUIRED arguments :
+* ```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library without enrichment)
+* ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library)
+* ```--out``` the name of the output file (gtf format). Optional aguments are ```--cutoff``` (default 0) and ```--Rformat``` output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
 
  
 ###[3] cluster_tss.pl : 
