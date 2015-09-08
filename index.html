@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Cappable-seq analysis</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Cappable-seq analysis</h1>
+        <p>Program to manipulate and extract TSS from Cappable-seq experiments</p>
+        <p class="view"><a href="https://github.com/Ettwiller/TSS">View the Project on GitHub <small>Ettwiller/TSS</small></a></p>
+        <ul>
+          <li><a href="https://github.com/Ettwiller/TSS/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Ettwiller/TSS/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Ettwiller/TSS">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre-requisites.</h3>
+
+<p>
+REQUIREMENT : Prior to running the TSS workflow for cappable-seq you will need to download and install BEDTOOLS
+</p>
+
+<pre><code>$curl http://bedtools.googlecode.com/files/BEDTools.latest_version.tar.gz > BEDTools.tar.gz
+$ tar -zxvf BEDTools.tar.gz
+$ cd BEDTools-ltest_version
+$ make
+</code></pre>
+
+<p>
+You will also need to install SAMTOOLS 
+</p>
+<pre><code>
+$git clone --branch=develop git://github.com/samtools/samtools.git
+$cd samtools
+$make
+</code></pre>
+
+<h3>
+<a id="rather-drive-stick" class="anchor" href="#rather-drive-stick" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
+
+<p>
+This sets of programs were developed in conjuction with Cappable-seq (Manuscript :
+ A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 4 programs :
+ </p>
+<p>
+ [1] bam2firstbasebam.pl<p>
+ [2] bam2firstbasegtf.pl<p>
+ [3] filter_tss.pl<p>
+ [4] cluster_tss.pl<p>
+</p>
+<p> 
+ [1] bam2firstbasebam.pl : the program takes 2 arguments (minimum), --bam the mapped bam file and --genome the genome file (fasta format) used to map the reads. The optional argument is the library type (--lib_type default F) that defines the type of library used : FR, RF or F. With FR being R1 Forward/ R2 Reverse, RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse will not provide TSS information. The program output a bam and bai file containing only the first position of the mapped read corresponding to the TSS. The output can be directly fed to genome visualization tools such as IGV. 
+ </p>
+<p>
+ [2] bam2firstbasegtf.pl : the program takes 1 argument (minimum), --bam the mapped bam file. Additional optional arguments are --cutoff (default 0) and --lib_type library type (default F, see description above). This program identifies the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The cutoff filter out positions which RRS are below the defined cutoff (default 0).
+ </p>
+<p>
+ [3] filter_tss.pl : The program takes 2 arguments (minimum),--control  the control gtf file (output from bam2firstbasegtf.pl using the control library) and --tss, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library). Optional aguments are --cutoff (default 0) and --Rformat output format (default 0). The cutoff filters out positions for which enrichment score are below the defined cutoff (default 0). 
+</p>
+<p>
+ [4] cluster_tss.pl : The program takes 1 argument (minimum) --tss the .gtf file (output of filter_tss.pl with Rformat 0). Optional argument is --cutoff (default 5) that defines the size of the upstream and downstream region for clustering consideration. 
+</p>
+<p>
+The commands used for the Cappable-seq analysis are the following :
+</p>
+<pre><code>
+$ bam2firstbasegtf.pl  --bam Replicate1_control_R1_001.bam --cutoff 0 > control.gtf
+$ bam2firstbasegtf.pl  --bam Replicate1_enriched_R1_001.bam --cutoff 1.5 > enriched.gtf
+$ filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 > TSS_enriched.gtf
+$ cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 >  TSS_enriched_cluster_5.gtf
+</pre></code>
+
+</P>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/Ettwiller">Ettwiller</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
