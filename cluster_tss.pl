@@ -1,10 +1,9 @@
 #!/usr/bin/perl
-
 use strict;
 use Getopt::Long qw(GetOptions);
 use File::Temp qw(tempfile);
 
-my $error_sentence = "USAGE : perl $0 --tss tss_file.gtf (from filter_tss.pl) --cutoff 3 (in bp DEFAULT 5 bp merging) --out output.gtf";
+my $error_sentence = "USAGE : perl $0 --tss tss_file.gtf (from filter_tss.pl or from bam2firstbasegtf.pl) --out output file name\nOPTIONAL : --cutoff 3 (in bp DEFAULT 5 bp merging)";
 my $tssfile;
 my $CUTOFF = 5;
 my $OUT;

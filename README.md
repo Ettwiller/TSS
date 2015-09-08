@@ -5,7 +5,7 @@
 ##REQUIREMENT : 
 Prior to running the TSS workflow for cappable-seq please download and install the following programs :
 
-**BEDTOOLS** (http://bedtools.readthedocs.org/en/latest/content/installation.html)
+**BEDTOOLS** (http://bedtools.readthedocs.org/en/latest/content/installation.html). Please use the latest version of bedtools (2.25.0). 
 
 **SAMTOOLS** (http://samtools.sourceforge.net/)
 
@@ -96,6 +96,8 @@ The program takes 2 REQUIRED arguments
 Optional argument is 
 * ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
 
+OUTPUT :
+gtf file containing the cluster positions. 
 
 ##DETAILS OF THE RELATED PROGRAMS :
 

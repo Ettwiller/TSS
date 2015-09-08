@@ -1,11 +1,9 @@
 #!/usr/bin/perl
-
 use strict;
-use warnings;
 use Getopt::Long qw(GetOptions);
 use File::Temp qw(tempfile);
 
-my $error_sentence = "USAGE : perl $0 --bam bamfile \nOPTIONAL : --lib_type FR (default F) --cutoff 1 (default 0) --out output.gtf\n";
+my $error_sentence = "USAGE : perl $0 --bam bamfile --out output.gtf\nOPTIONAL : --lib_type FR (default F) --cutoff 1 (default 0)\n";
 
 =comment
 Paired reads:
@@ -19,24 +17,24 @@ Unpaired (single) reads:
 F: the single read is in the sense (forward) orientation
 
 R: will not work!
-=cut
-
-
-# INPUT :
-#bam file X.bam (preferably generated through local alignment such as Bowtie --local)
+ INPUT :
+bam file X.bam (preferably generated through local alignment such as Bowtie --local)
+out output file name
 #OUTPUT :
+#gtf file
+=cut 
 
 #OPTIONS :
 my $bamfile;
 my $lib_type = "F";
 my $CUTOFF = 0;
-my $OUT;
+my $OUT; #output file name (gtf file)
 #================================= 
 #get options :
 GetOptions ("bam=s" => \$bamfile,    # the bam file containing the mapped reads
 	    "lib_type=s" => \$lib_type, #the type of RNA library used during the experiment
 	    "cutoff=s" => \$CUTOFF,#read number cutoff (see paper)
-	    "out=s" => \$OUT
+	    "out=s" => \$OUT #output file name.
     ) or die "USAGE : perl $0 $error_sentence";
 
 #=================================
@@ -45,6 +43,7 @@ if (!$bamfile || !$OUT) {die "$error_sentence"};
 if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
 --lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
 }
+#do not override a file 
 if(-e $OUT) { die "File $OUT Exists, please remove old file or rename output file (--out)"};
 #================================= 
 #start the main program :
@@ -150,15 +149,15 @@ sub parse_bed {
     foreach my $line (<FILE>)
     {
 	chomp $line;
-	my $start;
+	my ($start, $orientation)=undef;
 	my @tmp = split /\t/, $line;
 	my $chr = $tmp[0];
-	my $orientation = $tmp[5];
+	$orientation = $tmp[5];
 	if ($orientation eq "+")
 	{
 	    $start = $tmp[1];
 	}
-	else{
+	elsif ($orientation eq "-"){
 	    $start = $tmp[2];
 	}
 	$result{$chr}{$start}{$orientation}{"count"}++;
