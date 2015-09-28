@@ -23,13 +23,12 @@ if (!$tssfile || !$OUT) {die "$error_sentence\n";}
 if(-e $OUT) { die "File $OUT Exists, please remove old file or rename output file (--out)"};
 #=================================                                                                                                                         
 
-#my $generic = new File::Temp( UNLINK => 0 );
-my $generic = "tmp_cluster.tmp";
+my $generic = new File::Temp( UNLINK => 0 );
 my $command = "bedtools merge -s -c 3 -delim \";\" -o collapse -d $CUTOFF -i $tssfile > $generic";
 system($command);
 parse_merged($generic);
 
-#unlink $generic;
+unlink $generic;
 
 sub parse_merged{
     my ($file)=@_;
@@ -54,7 +53,7 @@ sub parse_merged{
         my @sorted = sort { $b->[0] <=> $a->[0] } @result;
         my $highest_pos = $sorted[0][1];
         my @col = split /\_/, $highest_pos;
-# bed format
+        # bed format
 	#print "$col[0]\t$col[1]\t$col[1]\t$highest_pos\t$col[2]\t$col[3]\n";
         #gtf format :
 	print OUT "$col[0]\tCAPPABLE_SEQ\tTSS\t$col[1]\t$col[1]\t$col[2]\t$col[3]\t.\t$highest_pos\n";
