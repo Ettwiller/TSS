@@ -44,7 +44,7 @@ DESCRIPTION :
 the reads to the position of the most 5'end position of the mapped read (R1 for FR and F and R2 for RF), counts the number of reads for each position in the genome, orientation and normalized number of reads (relative read score, RRS) to the total number of mapped reads in the file according to the following equation :  RRSio = (nio/N)/1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering).
 
 OPTIONS :
-The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F)
+The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F) and ```--absolute ```(default 0)
 
 * ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
 
@@ -53,6 +53,8 @@ The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. Optional argu
 * ```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
 
 * ```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
+
+* ```--absolute ``` : 0 will use the RRSio as cutoff 1 will use the absolute number of reads nio.
 
 OUTPUT : gtf file correponding to TSS genomic position. 
  
