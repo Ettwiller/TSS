@@ -3,7 +3,7 @@ use strict;
 use Getopt::Long qw(GetOptions);
 use File::Temp qw(tempfile);
 
-my $error_sentence = "USAGE : perl $0 --bam bamfile --out output.gtf\nOPTIONAL : --lib_type FR (default F) --cutoff 1 (default 0)\n";
+my $error_sentence = "USAGE : perl $0 --bam bamfile --out output.gtf\nOPTIONAL : --lib_type FR (default F) --cutoff 1 (default 0) --absolute 1\n";
 
 =comment
 Paired reads:
@@ -29,12 +29,14 @@ my $bamfile;
 my $lib_type = "F";
 my $CUTOFF = 0;
 my $OUT; #output file name (gtf file)
+my $absolute = 0;
 #================================= 
 #get options :
 GetOptions ("bam=s" => \$bamfile,    # the bam file containing the mapped reads
 	    "lib_type=s" => \$lib_type, #the type of RNA library used during the experiment
 	    "cutoff=s" => \$CUTOFF,#read number cutoff (see paper)
-	    "out=s" => \$OUT #output file name.
+	    "out=s" => \$OUT, #output file name.
+	    "absolute=s" => \$absolute
     ) or die "USAGE : perl $0 $error_sentence";
 
 #=================================
@@ -97,17 +99,20 @@ foreach my $chr (sort keys %$result)
     {
 	if ($$result{$chr}{$keys}{"-"}{"count"})
         {
-            #get the RRS score for the position key and orientation -                                                                                      
-            my $neg = sprintf('%.3f',($$result{$chr}{$keys}{"-"}{"count"}/$count_mapped_read)*1000000);
+            #get the RRS score for the position key and orientation -                                                                                     
+	    my $neg;
+            my $relative_neg = sprintf('%.3f',($$result{$chr}{$keys}{"-"}{"count"}/$count_mapped_read)*1000000);
             my $abs_neg = $$result{$chr}{$keys}{"-"}{"count"};
-            if ($neg >= $CUTOFF)
+	    if ($absolute ==0) {$neg = $relative_neg;}
+            if ($absolute ==1) {$neg = $abs_neg;} #option to count the absolute number of reads instead of the relative # of reads
+	    if ($neg >= $CUTOFF)
             {
                 my $start = $keys;
                 $total_count ++;
-                my $id = $chr."_".$start."_".$neg."_-_";
+                my $id = $chr."_".$start."_".$abs_neg."_-_";
 		
                 my @tmp = @{$$result{$chr}{$keys}{"-"}{"read"}};
-                print OUT "$chr\t$generic\t$id\t$start\t$start\t$neg\t-\t.\tnumber_of_read=$abs_neg;total_number_of_read=$count_mapped_read\n";
+                print OUT "$chr\t$generic\t$id\t$start\t$start\t$relative_neg\t-\t.\tnumber_of_read=$abs_neg;total_number_of_read=$count_mapped_read\n";
             }
 	    
         }
@@ -116,17 +121,21 @@ foreach my $chr (sort keys %$result)
 	if ($$result{$chr}{$keys}{"+"}{"count"})
 	{
 	    #get the RRS score for the position key and orientation +
-	    my $pos = sprintf('%.3f',($$result{$chr}{$keys}{"+"}{"count"}/$count_mapped_read)*1000000);
+
+	    my $pos;
+	    my $relative_pos = sprintf('%.3f',($$result{$chr}{$keys}{"+"}{"count"}/$count_mapped_read)*1000000);
 	    my $abs_pos = $$result{$chr}{$keys}{"+"}{"count"};
+	    if ($absolute ==1) {$pos = $abs_pos;} #option to count the absolute number of reads instead of the relative # of reads  
+	    if ($absolute ==0) {$pos= $relative_pos;}
 	    if ($pos >= $CUTOFF)
 	    {
 		my $start = $keys +1;
 		$total_count ++;
 		my @tmp = @{$$result{$chr}{$keys}{"+"}{"read"}};
-		my $id = $chr."_".$start."_".$pos."_+_";
+		my $id = $chr."_".$start."_".$abs_pos."_+_";
 		
 		
-		print OUT "$chr\t$generic\t$id\t$start\t$start\t$pos\t+\t.\tnumber_of_read=$abs_pos;total_number_of_read=$count_mapped_read\n";
+		print OUT "$chr\t$generic\t$id\t$start\t$start\t$relative_pos\t+\t.\tnumber_of_read=$abs_pos;total_number_of_read=$count_mapped_read\n";
 	    }
 	}
 	

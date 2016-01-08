@@ -14,15 +14,16 @@ use Getopt::Long qw(GetOptions);
 my $bamfile;
 my $genome;
 my $lib_type = "F";
-
-my $error_message = "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
+my $out;
+my $error_message = "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR --out bam_start.bam \n";
 
 GetOptions ("bam=s" => \$bamfile,    # numeric
 	    "genome=s"   => \$genome,
-	    "lib_type=s" => \$lib_type
+	    "lib_type=s" => \$lib_type,
+	    "out=s" => \$out
     ) or die "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
 
-if (!$bamfile || !$genome) {die "USAGE : perl $0 --bam bamfile --genome genome.fai\n";}
+if (!$bamfile || !$genome || !$out ) {die "USAGE : perl $0 --bam bamfile --genome genome.fai --out outfile.bam \n";}
 if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
 --lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
 }
@@ -61,8 +62,8 @@ $generic =~ s/.*\///g;
 print STDERR "Generating the bam files - be patient it may take a while - \n";
 
 
-my $file_tmp = "bamtmp";my $bed = "bedtmp";my $newbam = $generic."_start";
-
+my $file_tmp = "bamtmp";my $bed = "bedtmp";my $newbam = $out;
+$newbam =~ s/\.bam//;
 #first convert your bam to bed. 
 my $command = "bedtools bamtobed -cigar  -i $resulting_bam > $file_tmp"; 
 
