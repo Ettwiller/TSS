@@ -111,7 +111,7 @@ foreach my $chr (sort keys %$result)
                 $total_count ++;
                 my $id = $chr."_".$start."_".$abs_neg."_-_";
 		
-                my @tmp = @{$$result{$chr}{$keys}{"-"}{"read"}};
+
                 print OUT "$chr\t$generic\t$id\t$start\t$start\t$relative_neg\t-\t.\tnumber_of_read=$abs_neg;total_number_of_read=$count_mapped_read\n";
             }
 	    
@@ -131,10 +131,8 @@ foreach my $chr (sort keys %$result)
 	    {
 		my $start = $keys +1;
 		$total_count ++;
-		my @tmp = @{$$result{$chr}{$keys}{"+"}{"read"}};
-		my $id = $chr."_".$start."_".$abs_pos."_+_";
-		
-		
+
+		my $id = $chr."_".$start."_".$abs_pos."_+_";		
 		print OUT "$chr\t$generic\t$id\t$start\t$start\t$relative_pos\t+\t.\tnumber_of_read=$abs_pos;total_number_of_read=$count_mapped_read\n";
 	    }
 	}
@@ -170,7 +168,7 @@ sub parse_bed {
 	    $start = $tmp[2];
 	}
 	$result{$chr}{$start}{$orientation}{"count"}++;
-	push @{$result{$chr}{$start}{$orientation}{"read"}}, $line;
+
     
     }
     
