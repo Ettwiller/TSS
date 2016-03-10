@@ -1,0 +1,2 @@
+gi|48994873|gb|U00096.2|	gb2gtf	tmRNA	2753615	2753977	.	+	.	gene_id "b2621"; transcript_id "b2621"; gene_id "ssrA"; db_xref "ASAP:ABE-0008624"; db_xref "EcoGene:EG30100"
+gi|48994873|gb|U00096.2|	gb2gtf	tmRNA	2775994	2776007	.	+	.	gene_id "b4645"; transcript_id "b4645"; gene_id "psaA"; db_xref "EcoGene:EG31174"
