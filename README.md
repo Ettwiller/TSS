@@ -3,7 +3,7 @@
 
 
 ##REQUIREMENT : 
-Prior to running the TSS workflow for cappable-seq please download and install the following programs :
+Prior to running the TSS workflow for Cappable-seq please download and install the following programs :
 
 **BEDTOOLS** (http://bedtools.readthedocs.org/en/latest/content/installation.html). Please use the latest version of bedtools (2.25.0). 
 
@@ -29,6 +29,8 @@ It contains also related programs for a specific task such as :
 
 [Cappable-seq]: http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2539-z
 
+##CONSIDERATIONS :
+The TSS suit of program assumes that you have mapped your reads to the reference genome using a mapping algorithm of your choice. How the algorithm considered unmatched 5'end of reads is important for the correct identification of TSS using this suit of programs. We strongly recommend using Bowtie2 local to perform the mapping. Bowtie2 local soft mask a mismatched 5'end of a read and thus, bam2firstbasegtf.pl or bam2firstbasebam.pl will identify the TSS as the position of the most 5' nucleotide matching the reference genome. 
 
 ##DETAILS OF THE MAIN PROGRAMS :
 
