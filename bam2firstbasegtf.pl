@@ -148,6 +148,7 @@ sub clean_name {
     $generic =~ s/.*\///g;
     return $generic;
 } 
+
 sub parse_bed {
     my ($file)=@_;
     open (FILE, $file) or die;
