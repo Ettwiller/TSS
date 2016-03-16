@@ -48,7 +48,7 @@ cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.
 
 ##DETAILS OF THE MAIN PROGRAMS :
 
-###[1] bam2firstbasegtf.pl :
+### 1. bam2firstbasegtf.pl :
 
 EXAMPLE :
 ```
