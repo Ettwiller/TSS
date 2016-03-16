@@ -52,7 +52,7 @@ The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. OPTIONAL argu
 
 * ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
 
-* ```-out``` : name of the  gtf file correponding to TSS genomic position.
+* ```-out``` : name of the  gtf file correponding to TSS genomic position. For example TSS.gtf
 
 * ```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
 
@@ -60,9 +60,9 @@ The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. OPTIONAL argu
 
 * ```--absolute ``` : 0 will use the RRSio as cutoff 1 will use the absolute number of reads nio.
 
-OUTPUT : gtf file correponding to TSS genomic position. 
+OUTPUT : GTF file correponding to TSS genomic position. The coordinates are 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
  
-
+[see 1 versus 0 based system]: https://www.biostars.org/p/84686/
 
 ###[2] filter_tss.pl : 
 
@@ -146,5 +146,3 @@ organized_by_TSS_type.pl  --tss TSS_enriched_cluster_5.gtf --genome reference_ge
 If you are using this suite of program for publication please reference : 
 
 A novel enrichment strategy reveals unprecedented number of novel transcription start sites at single base resolution in a model prokaryote and the gut microbiome Laurence Ettwiller, John Buswell, Erbay Yigit and Ira Schildkraut. BMC Genomics201617:199.
-
-
