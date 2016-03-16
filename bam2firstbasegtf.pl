@@ -42,8 +42,7 @@ GetOptions ("bam=s" => \$bamfile,    # the bam file containing the mapped reads
 #=================================
 #if something went wrong, notify :
 if (!$bamfile || !$OUT) {die "$error_sentence"};
-if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
---lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
+if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "USAGE : perl $0 $error_sentence";
 }
 #do not override a file 
 if(-e $OUT) { die "File $OUT Exists, please remove old file or rename output file (--out)"};
@@ -175,4 +174,3 @@ sub parse_bed {
 
     return \%result;
 }
-
