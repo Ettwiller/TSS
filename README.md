@@ -1,5 +1,5 @@
- # TSS workflow for Cappable-seq
- Laurence Ettwiller (New England Biolabs)
+ # TSS workflow for Cappable-seq. 
+ Programs developped and maintained by Laurence Ettwiller (New England Biolabs). 
 
 
 ##REQUIREMENT : 
@@ -9,14 +9,13 @@ Prior to running the TSS workflow for Cappable-seq please download and install t
 
 **SAMTOOLS** (http://samtools.sourceforge.net/)
 
-Optional : 
+OPTIONAL : 
 
 **IGV** (http://www.broadinstitute.org/igv/)
 
 
 ##OVERVIEW
-This sets of programs were developed in conjuction with the development of [Cappable-seq][Cappable-seq] (Manuscript :
-A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 3 basic programs :
+This sets of programs were developed in conjuction with the development of the  [Cappable-seq][Cappable-seq] technology. The folder contains 3 basic programs :
  
  1. ```bam2firstbasegtf.pl``` 
  2. ```filter_tss.pl``` OPTIONAL if a control library has been added.  
