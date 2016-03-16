@@ -50,15 +50,15 @@ This program takes mapped reads (First in pair read for --lib_type FR and second
 OPTIONS :
 The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. OPTIONAL arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F) and ```--absolute ```(default 0)
 
-* ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
+* ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local). REQUIRED
 
-* ```-out``` : name of the  gtf file correponding to TSS genomic position. For example TSS.gtf
+* ```-out``` : name of the  gtf file correponding to TSS genomic position. For example TSS.gtf. REQUIRED
 
-* ```--cutoff``` : positive number (int) corresponding to the RRSio (filtering TSS according to the relative read score).
+* ```--cutoff``` : positive number (int) corresponding to the RRSio (relative number of reads). The behavior of --cutoff is modified by the option --absolute : if --absolute 1 the positive number (int) corresponding to the nio (absolute number of reads)(default 0). REQUIRED
 
-* ```--lib_type``` : F, RF or FR defines the type of library used. With FR being R1 Forward/ R2 Reverse (relaive to the transcript orientation), RF being R1 Reverse/ R2 Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported.
+* ```--lib_type``` : F, RF or FR defines the type of library used. With FR being first in pair read is Forward and second in pair read is Reverse (relative to  transcript), RF being first in pair read is Reverse and second in pair read is Forward and F being single read forward. Single read reverse (R) will not provide TSS information and is not supported. (default F) 
 
-* ```--absolute ``` : 0 will use the RRSio as cutoff 1 will use the absolute number of reads nio.
+* ```--absolute ``` : 0 will use the RRSio as cutoff 1 will use the absolute number of reads nio. (default 0)
 
 OUTPUT : GTF file correponding to TSS genomic position. The coordinates are in 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
  
