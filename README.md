@@ -78,7 +78,7 @@ OUTPUT : GTF file correponding to TSS genomic position. The coordinates are in 1
  
 [see 1 versus 0 based system]: https://www.biostars.org/p/84686/
 
-###[2] filter_tss.pl : 
+### 2. filter_tss.pl : 
 
 EXAMPLE : 
 ```
@@ -101,7 +101,7 @@ OPTIONAL aguments are
 OUTPUT :
 gtf file containing the retained TSS positions.  The coordinates are in 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
  
-###[3] cluster_tss.pl : 
+### 3. cluster_tss.pl : 
 
 EXAMPLE : 
 ```
@@ -124,7 +124,7 @@ gtf file containing the cluster positions.  The coordinates are in 1-based syste
 ##DETAILS OF THE RELATED PROGRAMS :
 
 
-###[4] bam2firstbasebam.pl :
+### 4. bam2firstbasebam.pl :
 
 EXAMPLE
 ```
@@ -141,7 +141,7 @@ The program output a .bam and .bai files containing only the first position of t
 
 
 
-###[5] organized_by_TSS_type.pl :
+### 5. organized_by_TSS_type.pl :
 DESCRIPTION :
 
 OPTION : --tss ../../TSS/TSS_enriched_cluster_5.gtf --genome /mnt/home/ettwiller/laurence/projects/ira_cap/3_ecoli_RNase_inhibitors/genome/ecoli_genome_and_controls_new.fasta --detail : 0 or 1 : 0 gives an overview of the percentage of TSS have a defined -1+1 combinations while 1 gives you for each TSS, the -1+1 combination, its strength (RSS) and enrichement (in cappable-seq) 
