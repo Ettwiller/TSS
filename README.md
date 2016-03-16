@@ -45,10 +45,10 @@ DESCRIPTION :
 
 ```bam2firstbasegtf.pl``` identifies TSS at one base resolution. 
 
-Reads (R1 for FR and F and R2 for RF) are trimmed to 1 nucleotide long read (corresponding to the most 5' nucleotide mapping to the reference genome. For each position in the genome, the alorithm counts the number of reads in each orientation (+/-) and reads are normalized to the total number of mapped reads in the file according to the following equation:  RRSio = (nio/N)*1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering). The behavior of -cutoff is altered by the option --absolute. If --absolute is 1, the nio is used as a cutoff instead. 
+This program takes mapped reads (First in pair read for --lib_type FR and second in pair read for --lib_type RF) and trimmed them to 1 nucleotide long read (corresponding to the most 5' nucleotide mapping to the reference genome). For each position in the genome, the alorithm counts the number of reads in each orientation (+/-) and reads are normalized to the total number of mapped reads in the file according to the following equation:  RRSio = (nio/N)*1000000 with RRSio being the relative read score at position i and orientation o (+ or -), nio : number of reads at position i in orientation o and N being the total number of mapped reads. The optional ```-cutoff``` filter out positions which RRSio are below the defined cutoff (default 0, no filtering). The behavior of -cutoff is altered by the option --absolute. If --absolute is 1, the nio is used as a cutoff instead. 
 
 OPTIONS :
-The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. Optional arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F) and ```--absolute ```(default 0)
+The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. OPTIONAL arguments are ```--cutoff``` (default 0) and ```--lib_type``` (default F) and ```--absolute ```(default 0)
 
 * ```--bam``` : path to the bam file of aligned reads (recommended alignment algorithm is bowtie2 --local).
 
