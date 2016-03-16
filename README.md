@@ -31,6 +31,21 @@ It contains also related programs for a specific task such as :
 ##CONSIDERATIONS :
 The TSS suit of program assumes that you have mapped your reads to the reference genome using a mapping algorithm of your choice. How the algorithm considered unmatched 5'end of reads is important for the correct identification of TSS using this suit of programs. We strongly recommend using Bowtie2 local to perform the mapping. Bowtie2 local soft mask a mismatched 5'end of a read and thus, bam2firstbasegtf.pl or bam2firstbasebam.pl will identify the TSS as the position of the most 5' nucleotide matching the reference genome. 
 
+##TYPICAL WORKFLOW :
+
+#With a control library (library that has not been subject to Streptavidin enrichement) : 
+```
+bam2firstbasegtf.pl  --bam control_library.bam --cutoff 0 --out control.gtf
+bam2firstbasegtf.pl  --bam Cappable-seq_library.bam --cutoff 1.5 --out enriched.gtf
+filter_tss.pl --tss enriched.gtf --control control.gtf --cutoff 0 --out TSS_enriched.gtf
+cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.gtf
+```
+#Without a control library :
+```
+bam2firstbasegtf.pl  --bam Cappable-seq_library.bam --cutoff 1.5 --out TSS_enriched.gtf
+cluster_tss.pl  --tss TSS_enriched.gtf --cutoff  5 --out TSS_enriched_cluster_5.gtf
+```
+
 ##DETAILS OF THE MAIN PROGRAMS :
 
 ###[1] bam2firstbasegtf.pl :
