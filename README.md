@@ -80,10 +80,12 @@ OPTIONS :
 * ```--control```  the control gtf file (output from ```bam2firstbasegtf.pl``` using the control library without enrichment)
 * ```--tss```, the gtf file (output of bam2firstbasegtf.pl using the Cappable-seq library)
 * ```--out``` the name of the output file (gtf format). 
-Optional aguments are 
+OPTIONAL aguments are 
 * ```--cutoff``` (default 0) :  The cutoff filters out positions for which enrichment score are below the defined cutoff. It only keeps positions for which log2 (RRStss / RRScontrol) > cutoff.
 * ```--Rformat``` output format (default 0).
 
+OUTPUT :
+gtf file containing the retained TSS positions.  The coordinates are in 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
  
 ###[3] cluster_tss.pl : 
 
@@ -103,7 +105,7 @@ Optional argument is
 * ```--cutoff``` (default 5) that defines the size (in bp) of the upstream and downstream region for clustering consideration. 
 
 OUTPUT :
-gtf file containing the cluster positions. 
+gtf file containing the cluster positions.  The coordinates are in 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
 
 ##DETAILS OF THE RELATED PROGRAMS :
 
