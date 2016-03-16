@@ -15,7 +15,7 @@ Optional :
 
 
 ##OVERVIEW
-This sets of programs were developed in conjuction with Cappable-seq (Manuscript :
+This sets of programs were developed in conjuction with the development of [Cappable-seq][Cappable-seq] (Manuscript :
 A novel strategy for investigating transcriptomes by capturing primary RNA transcripts in submission).The folder contains 3 basic programs :
  
  1. ```bam2firstbasegtf.pl``` 
@@ -26,6 +26,8 @@ It contains also related programs for a specific task such as :
    
   4. ```bam2firstbasebam.pl```
   5. ```organized_by_TSS_type.pl``` 
+
+[Cappable-seq]: http://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-2539-z
 
 
 ##DETAILS OF THE MAIN PROGRAMS :
