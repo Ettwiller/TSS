@@ -142,3 +142,9 @@ Figure3 :
 ```
 organized_by_TSS_type.pl  --tss TSS_enriched_cluster_5.gtf --genome reference_genome.fasta --detail 1 or 0
 ```
+##REFERENCE :
+If you are using this suite of program for publication please reference : 
+
+A novel enrichment strategy reveals unprecedented number of novel transcription start sites at single base resolution in a model prokaryote and the gut microbiome Laurence Ettwiller, John Buswell, Erbay Yigit and Ira Schildkraut. BMC Genomics201617:199.
+
+
