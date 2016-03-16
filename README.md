@@ -60,7 +60,7 @@ The program takes 2 REQUIRED arguments, ```--bam``` and ```out```. OPTIONAL argu
 
 * ```--absolute ``` : 0 will use the RRSio as cutoff 1 will use the absolute number of reads nio.
 
-OUTPUT : GTF file correponding to TSS genomic position. The coordinates are 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
+OUTPUT : GTF file correponding to TSS genomic position. The coordinates are in 1-based system ([see 1 versus 0 based system][see 1 versus 0 based system])
  
 [see 1 versus 0 based system]: https://www.biostars.org/p/84686/
 
