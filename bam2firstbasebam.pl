@@ -21,11 +21,10 @@ GetOptions ("bam=s" => \$bamfile,    # numeric
 	    "genome=s"   => \$genome,
 	    "lib_type=s" => \$lib_type,
 	    "out=s" => \$out
-    ) or die "USAGE : perl $0 --bam bamfile --genome genome.fai --lib_type FR\n";
+    ) or die $error_message;
 
 if (!$bamfile || !$genome || !$out ) {die "USAGE : perl $0 --bam bamfile --genome genome.fai --out outfile.bam \n";}
-if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die "
---lib_type should be either FR (forward/reverse) or RF (reverse / forward) for paired end reads or F (single read).";
+if ($lib_type ne "FR" && $lib_type ne "RF" && $lib_type ne "F"){ die $error_message;
 }
 
 my $resulting_bam;
@@ -121,4 +120,3 @@ sub parse_bed {
     close FILE;
     close OUT;
 }
-
