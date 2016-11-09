@@ -24,12 +24,12 @@ if(-e $OUT) { die "File $OUT Exists, please remove old file or rename output fil
 #=================================                                                                                                                         
 
 my $generic = new File::Temp( UNLINK => 0 );
-#my $generic = "generic";
+my $generic = "generic";
 my $command = "bedtools merge -s -c 3 -o collapse -d $CUTOFF -i $tssfile > $generic";
 system($command);
 parse_merged($generic);
 
-unlink $generic;
+#unlink $generic;
 
 sub parse_merged{
     my ($file)=@_;
@@ -39,7 +39,7 @@ sub parse_merged{
     {
         chomp $line;
         my @tmp = split /\t/, $line;
-        my @positions = split /\,/, $tmp[4];
+        my @positions = split /\,/, $tmp[-1];
 #print "@positions\n";
         my $merge_size = @positions;
         my @result=[];
