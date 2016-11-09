@@ -24,7 +24,8 @@ if(-e $OUT) { die "File $OUT Exists, please remove old file or rename output fil
 #=================================                                                                                                                         
 
 my $generic = new File::Temp( UNLINK => 0 );
-my $command = "bedtools merge -s -c 3 -delim \";\" -o collapse -d $CUTOFF -i $tssfile > $generic";
+#my $generic = "generic";
+my $command = "bedtools merge -s -c 3 -o collapse -d $CUTOFF -i $tssfile > $generic";
 system($command);
 parse_merged($generic);
 
@@ -38,7 +39,8 @@ sub parse_merged{
     {
         chomp $line;
         my @tmp = split /\t/, $line;
-        my @positions = split /\;/, $tmp[3];
+        my @positions = split /\,/, $tmp[4];
+#print "@positions\n";
         my $merge_size = @positions;
         my @result=[];
         for (my $i=0; $i<$merge_size; $i++)
@@ -52,11 +54,16 @@ sub parse_merged{
         }           
         my @sorted = sort { $b->[0] <=> $a->[0] } @result;
         my $highest_pos = $sorted[0][1];
-        my @col = split /\_/, $highest_pos;
+    my $chr = $tmp[0];
+    
+    $highest_pos =~ s/\Q$chr//;
+    $highest_pos =~ s/^\_//;
+   
+    my @col = split /\_/, $highest_pos;
         # bed format
 	#print "$col[0]\t$col[1]\t$col[1]\t$highest_pos\t$col[2]\t$col[3]\n";
         #gtf format :
-	print OUT "$col[0]\tCAPPABLE_SEQ\tTSS\t$col[1]\t$col[1]\t$col[2]\t$col[3]\t.\t$highest_pos\n";
+	print OUT "$chr\tCAPPABLE_SEQ\tTSS\t$col[0]\t$col[0]\t$col[1]\t$col[2]\t.\t$highest_pos\n";
 
 
 
