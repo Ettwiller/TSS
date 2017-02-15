@@ -2,7 +2,7 @@
 use strict;
 use Getopt::Long qw(GetOptions);
 
-my $error_sentence = "USAGE : perl $0 --tss tss_file --genome genome_file (fasta) OPTIONAL : --detail 0 or 1 (default 0)";
+my $error_sentence = "USAGE : perl $0 --tss tss_file (bed or ftg) --genome genome_file (fasta) OPTIONAL : --detail 0 or 1 (default 0)";
 my $TSS;
 my $genome;
 my $detail = 0; #0 or 1
