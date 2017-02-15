@@ -42,11 +42,11 @@ my $out = $TSS;
 $out =~ s/.*\///g;
 $out =~ s/\.gtf//;
 $out = "tmp_".$out.".fasta";
-my $c = "bedtools intersect -u  -a $TSS -b ecoli_genome.bed > $tmp";
+#my $c = "bedtools intersect -u  -a $TSS -b ecoli_genome.bed > $tmp";
 #print "$c\n";
-system($c);
+#system($c);
 
-my $command = " bedtools slop -i $tmp -g $fai  -s -l 1 -r 0 | bedtools getfasta  -s -fi $genome -bed - -fo $out";
+my $command = " bedtools slop -i $TSS -g $fai  -s -l 1 -r 0 | bedtools getfasta  -s -fi $genome -bed - -fo $out";
 
 #print "$command\n";
 system($command);
