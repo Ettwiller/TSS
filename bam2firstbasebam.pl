@@ -40,16 +40,17 @@ elsif ($lib_type eq "FR")
 {
     my $tmp = "R1";
     #extract R1 from bam
-    my $library_command = "samtools view -f64 -b $bamfile | samtools sort - $tmp";
     $resulting_bam = $tmp.".bam";
+    my $library_command = "samtools view -f64 -b $bamfile | samtools sort -o $resulting_bam -";
     system($library_command);
 }
 elsif ($lib_type eq "RF")
 {
     my $tmp = "R2";
-    #extract R1 from bam                                                                                                                                                      
-    my $library_command = "samtools view -f128 -b $bamfile | samtools sort - $tmp";
+    #extract R1 from bam
     $resulting_bam = $tmp.".bam";
+    my $library_command = "samtools view -f128 -b $bamfile | samtools sort -o $resulting_bam -";
+    
     system($library_command);
 }
 
@@ -75,8 +76,9 @@ system($command);
 parse_bed($file_tmp, $bed);
 
 #then go back to bam again - sort it at the same time. 
-my $command2 = "bedtools bedtobam -i $bed -g $genome | samtools sort - $newbam";
 my $newbam_withbam = $newbam.".bam";
+my $command2 = "bedtools bedtobam -i $bed -g $genome | samtools sort -o $newbam_withbam -";
+
 my $command3 = "samtools index $newbam_withbam";
 
 #excecute the commands
